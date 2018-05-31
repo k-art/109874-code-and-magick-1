@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Артём Козлов](https://up.htmlacademy.ru/javascript/14/user/109874).
-* Наставник: `Неизвестно`.
+* Наставник: [Данил Чекалин](https://up.htmlacademy.ru/javascript/14/user/335807).
 
 ---
 
