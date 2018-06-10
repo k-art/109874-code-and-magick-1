@@ -14,16 +14,17 @@
   var NUMBER_OF_WIZARDS = 4;
 
   function selectRandomElement(data) {
-    return Math.floor(Math.random() * data.length);
+    var index = Math.floor(Math.random() * data.length);
+    return data[index];
   }
 
   function createRandomWizardsData(number) {
     var wizardsData = [];
     for (var i = 0; i < number; i++) {
       wizardsData[i] = {};
-      wizardsData[i].name = WIZARD_NAMES[selectRandomElement(WIZARD_NAMES)] + ' ' + WIZARD_SURNAMES[selectRandomElement(WIZARD_SURNAMES)];
-      wizardsData[i].coatColor = WIZARD_COAT_COLORS[selectRandomElement(WIZARD_COAT_COLORS)];
-      wizardsData[i].eyesColor = WIZARD_EYES_COLORS[selectRandomElement(WIZARD_EYES_COLORS)];
+      wizardsData[i].name = selectRandomElement(WIZARD_NAMES) + ' ' + selectRandomElement(WIZARD_SURNAMES);
+      wizardsData[i].coatColor = selectRandomElement(WIZARD_COAT_COLORS);
+      wizardsData[i].eyesColor = selectRandomElement(WIZARD_EYES_COLORS);
     }
     return wizardsData;
   }
