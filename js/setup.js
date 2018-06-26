@@ -10,6 +10,9 @@
   var setupUserName = document.querySelector('.setup-user-name');
   var ESC_KEY_CODE = 27;
   var ENTER_KEY_CODE = 13;
+  var setapStartY;
+  var setapStartX;
+
 
   function onPopupEscPress(evt) {
     if (evt.keyCode === ESC_KEY_CODE && evt.currentTarget !== setupUserName) {
@@ -22,11 +25,15 @@
     setup.classList.remove('hidden');
     setupUserName.addEventListener('keydown', onPopupEscPress);
     document.addEventListener('keydown', onPopupEscPress);
+    setapStartY = setup.offsetTop;
+    setapStartX = setup.offsetLeft;
   }
 
   function closePopup() {
     setup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
+    setup.style.top = setapStartY + 'px';
+    setup.style.left = setapStartX + 'px';
   }
 
   setupOpen.addEventListener('click', function () {
