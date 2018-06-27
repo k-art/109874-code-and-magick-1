@@ -18,7 +18,9 @@
       inputHidden.value = randomColor;
     }
 
-    element.addEventListener('click', colourElement);
+    element.addEventListener('click', function () {
+      colourElement();
+    });
     element.addEventListener('keydown', function (evt) {
       if (window.utils.isEnterPressed(evt)) {
         colourElement();
