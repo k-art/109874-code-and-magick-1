@@ -1,9 +1,57 @@
 'use strict';
 
 (function () {
-  var setupDialog = document.querySelector('.setup');
-  var dialogHandler = setupDialog.querySelector('.upload');
+  var setup = document.querySelector('.setup');
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = document.querySelector('.setup-close');
+  var setupUserName = document.querySelector('.setup-user-name');
+  var dialogHandler = setup.querySelector('.upload');
+  var setapStartY;
+  var setapStartX;
 
+  function onPopupEscPress(evt) {
+    if (window.utils.isEscPressed(evt) && evt.currentTarget !== setupUserName) {
+      closePopup();
+    }
+    evt.stopPropagation();
+  }
+
+  function openPopup() {
+    setup.classList.remove('hidden');
+    setupUserName.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('keydown', onPopupEscPress);
+    setapStartY = setup.offsetTop;
+    setapStartX = setup.offsetLeft;
+  }
+
+  function closePopup() {
+    setup.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
+    setup.style.top = setapStartY + 'px';
+    setup.style.left = setapStartX + 'px';
+  }
+
+  // Открытие диалога
+  setupOpen.addEventListener('click', function () {
+    openPopup();
+  });
+  setupOpen.addEventListener('keydown', function (evt) {
+    if (window.utils.isEnterPressed(evt)) {
+      openPopup();
+    }
+  });
+
+  // Закрытие диалога
+  setupClose.addEventListener('click', function () {
+    closePopup();
+  });
+  setupClose.addEventListener('keydown', function (evt) {
+    if (window.utils.isEnterPressed(evt)) {
+      closePopup();
+    }
+  });
+
+  // Перемещение диалога
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -28,8 +76,8 @@
         y: moveEvt.clientY
       };
 
-      setupDialog.style.top = (setupDialog.offsetTop - shift.y) + 'px';
-      setupDialog.style.left = (setupDialog.offsetLeft - shift.x) + 'px';
+      setup.style.top = (setup.offsetTop - shift.y) + 'px';
+      setup.style.left = (setup.offsetLeft - shift.x) + 'px';
     }
 
     function onMouseUp(upEvt) {
