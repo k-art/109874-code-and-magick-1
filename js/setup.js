@@ -21,30 +21,25 @@
   window.colorize(wizardEyes, EYES_COLORS, inputHiddenEyesColor);
   window.colorize(wizardFireball, FIREBALL_COLORS, inputHiddenFireballColor);
 
+  var NUMBER_OF_ELEMENTS = 4;
 
-  // Отрисовка похожих персонажей
-
-  var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var WIZARD_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-  var NUMBER_OF_WIZARDS = 4;
-
-  function createRandomWizardsData(number) {
-    var wizardsData = [];
-    for (var i = 0; i < number; i++) {
-      wizardsData[i] = {};
-      wizardsData[i].name = window.utils.selectRandomElement(WIZARD_NAMES) + ' ' + window.utils.selectRandomElement(WIZARD_SURNAMES);
-      wizardsData[i].coatColor = window.utils.selectRandomElement(WIZARD_COAT_COLORS);
-      wizardsData[i].eyesColor = window.utils.selectRandomElement(WIZARD_EYES_COLORS);
-    }
-    return wizardsData;
+  function onSuccessLoad(data) {
+    window.render(data, NUMBER_OF_ELEMENTS);
   }
 
-  var wizards = createRandomWizardsData(NUMBER_OF_WIZARDS);
-  var similarWizard = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  var similarWizardsList = document.querySelector('.setup-similar-list');
+  function onSuccessUpload() {
+    window.closePopup();
+  }
 
-  similarWizardsList.appendChild(window.render(wizards, similarWizard, NUMBER_OF_WIZARDS));
-  document.querySelector('.setup-similar').classList.remove('hidden');
+  function onErrorEvent(errorMessage) {
+    window.error(errorMessage);
+  }
+
+  window.backend.load(onSuccessLoad, onErrorEvent);
+
+  var form = setup.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), onSuccessUpload, onErrorEvent);
+  });
 })();

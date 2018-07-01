@@ -11,7 +11,7 @@
 
   function onPopupEscPress(evt) {
     if (window.utils.isEscPressed(evt) && evt.currentTarget !== setupUserName) {
-      closePopup();
+      window.closePopup();
     }
     evt.stopPropagation();
   }
@@ -24,12 +24,12 @@
     setapStartX = setup.offsetLeft;
   }
 
-  function closePopup() {
+  window.closePopup = function () {
     setup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
     setup.style.top = setapStartY + 'px';
     setup.style.left = setapStartX + 'px';
-  }
+  };
 
   // Открытие диалога
   setupOpen.addEventListener('click', function () {
@@ -43,11 +43,11 @@
 
   // Закрытие диалога
   setupClose.addEventListener('click', function () {
-    closePopup();
+    window.closePopup();
   });
   setupClose.addEventListener('keydown', function (evt) {
     if (window.utils.isEnterPressed(evt)) {
-      closePopup();
+      window.closePopup();
     }
   });
 
