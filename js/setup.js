@@ -21,46 +21,25 @@
   window.colorize(wizardEyes, EYES_COLORS, inputHiddenEyesColor);
   window.colorize(wizardFireball, FIREBALL_COLORS, inputHiddenFireballColor);
 
+  var NUMBER_OF_ELEMENTS = 4;
 
-  // Отрисовка похожих персонажей
-
-  var similarListElement = document.querySelector('.setup-similar-list');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
-  var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var WIZARD_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-  var NUMBER_OF_WIZARDS = 4;
-
-  function createRandomWizardsData(number) {
-    var wizardsData = [];
-    for (var i = 0; i < number; i++) {
-      wizardsData[i] = {};
-      wizardsData[i].name = window.utils.selectRandomElement(WIZARD_NAMES) + ' ' + window.utils.selectRandomElement(WIZARD_SURNAMES);
-      wizardsData[i].coatColor = window.utils.selectRandomElement(WIZARD_COAT_COLORS);
-      wizardsData[i].eyesColor = window.utils.selectRandomElement(WIZARD_EYES_COLORS);
-    }
-    return wizardsData;
+  function onSuccessLoad(data) {
+    window.render(data, NUMBER_OF_ELEMENTS);
   }
 
-  var wizards = createRandomWizardsData(NUMBER_OF_WIZARDS);
-
-  function renderWizard(wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
-
-    return wizardElement;
+  function onSuccessUpload() {
+    window.closePopup();
   }
 
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < wizards.length; i++) {
-    fragment.appendChild(renderWizard(wizards[i]));
+  function onErrorEvent(errorMessage) {
+    window.error(errorMessage);
   }
-  similarListElement.appendChild(fragment);
 
-  document.querySelector('.setup-similar').classList.remove('hidden');
+  window.backend.load(onSuccessLoad, onErrorEvent);
+
+  var form = setup.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), onSuccessUpload, onErrorEvent);
+  });
 })();
