@@ -17,14 +17,12 @@
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
-  window.colorize(wizardCoat, COAT_COLORS, inputHiddenCoatColor);
-  window.colorize(wizardEyes, EYES_COLORS, inputHiddenEyesColor);
+  window.colorize(wizardCoat, COAT_COLORS, inputHiddenCoatColor, window.wizard.onCoatChange);
+  window.colorize(wizardEyes, EYES_COLORS, inputHiddenEyesColor, window.wizard.onEyesChange);
   window.colorize(wizardFireball, FIREBALL_COLORS, inputHiddenFireballColor);
 
-  var NUMBER_OF_ELEMENTS = 4;
-
   function onSuccessLoad(data) {
-    window.render(data, NUMBER_OF_ELEMENTS);
+    window.updateWizards(data);
   }
 
   function onSuccessUpload() {

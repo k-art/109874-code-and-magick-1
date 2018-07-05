@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.colorize = function (element, colors, inputHidden) {
+  window.colorize = function (element, colors, inputHidden, onColorChange) {
 
     function colourElement() {
       var randomColor = window.utils.selectRandomElement(colors);
@@ -14,6 +14,7 @@
         element.style.backgroundColor = randomColor;
       } else {
         element.style.fill = randomColor;
+        onColorChange(randomColor);
       }
       inputHidden.value = randomColor;
     }

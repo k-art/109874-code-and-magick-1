@@ -35,6 +35,12 @@ window.utils = (function () {
         data[i] = newData[i];
       }
       return data;
+    },
+
+    clearParentFromNodes: function (parent) {
+      while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+      }
     }
   };
 })();
